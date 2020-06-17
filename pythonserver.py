@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-Very simple HTTP server in python for logging requests
-Usage::
-    ./server.py [<port>]
-"""
 #import statements
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
@@ -26,7 +20,7 @@ class S(BaseHTTPRequestHandler):
         self.sheet = spread.sheet1
 
     #retrieve from spreadsheet
-    def do_GET(self):
+    def post(self):
         #print the path
         print("header", self.headers)
         print("path", self.path)
@@ -46,7 +40,7 @@ class S(BaseHTTPRequestHandler):
         self.end_headers()
 
     #post to spreadsheet database
-    def do_POST(self):
+    def post(self):
         print(self.headers)
         # Gets the size of data
         content_length = int(self.headers['Content-Length'])
@@ -63,19 +57,20 @@ class S(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
+        #writes the encoded file
         self.wfile.write(("http://"+self.headers['Host']+"/"+shortUrl).encode('utf-8'))
  
 #initializes server 
 def run(server_class=HTTPServer, handler_class=S, port=8083):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
-    print('Starting httpd...\n')
+    print('Start')
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass
     httpd.server_close()
-    print('Stopping httpd...\n')
+    print('End')
 
 if __name__ == '__main__':
     from sys import argv
