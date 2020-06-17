@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Alexa's URL shortener</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1>Shorten or Lengthen URLs</h1>
+        <div><p>Enter a URL to be shortened: </p>
+        <p><b>OR:</b></p>
+        <p>Enter a previously shortened URL to be lengthened: </p></div>
+    </body> 
+<h2>Enter URL</h2>
+    <input type="text" id="URL" name="URL">
+    <button onclick="makeURL();">Submit</button>
+<p id="newURL"></p>
+<script>
+    function makeURL(){
+            var url = document.getElementById("URL").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://url-shortener.lachmann.tech/', true);
+            xhr.onload = function () {
+                console.log("Callback");
+                document.getElementById("newURL").innerHTML = this.responseText;
+            };
+            console.log(url);
+            console.log(xhr);
+            xhr.send('url=' + url);
+    }
+</script>
+</html>
