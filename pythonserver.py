@@ -20,7 +20,7 @@ class S(BaseHTTPRequestHandler):
         self.sheet = spread.sheet1
 
     #retrieve from spreadsheet
-    def post(self):
+    def get(self):
         #print the path
         print("header", self.headers)
         print("path", self.path)
